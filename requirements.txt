@@ -4,3 +4,4 @@ Flask-RESTful
 Flask-SQLAlchemy
 SQLAlchemy
 marshmallow-sqlalchemy
+Flask-APScheduler
