@@ -24,3 +24,7 @@ htmlcov/
 .coverage
 .coverage.*
 *,cover
+
+# Servicios clinica
+servicios_clinica/venv/
+servicios_clinica/services_db.db
