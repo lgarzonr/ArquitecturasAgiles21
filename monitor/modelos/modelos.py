@@ -9,6 +9,7 @@ db = SQLAlchemy()
 class Estados(enum.Enum):
     OK = 1
     ERROR = 2
+    OFF = 3
 
 class EstadoServicio(db.Model):
     id = db.Column(db.Integer, primary_key = True)
