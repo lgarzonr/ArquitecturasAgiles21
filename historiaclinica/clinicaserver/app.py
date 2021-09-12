@@ -1,5 +1,7 @@
 from flask import Flask
 from flask_mysqldb import MySQL
+from flask_apscheduler import APScheduler
+import requests
 
 app = Flask(__name__)
 
@@ -10,6 +12,17 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 mysql = MySQL(app)
 
+def send_status():
+    monitor_uri = 'https://httpbin.org/post'
+    pload = {'servicio_id':'historiaClinica','estado':'OK', 'descripcion':'servicio OK'}
+    r = requests.post(monitor_uri, data = pload)
+    print(r.text)
+
+scheduler = APScheduler()
+scheduler.add_job(id = 'intervalCheck', func = send_status, trigger = 'interval', seconds = 10)
+scheduler.init_app(app)
+scheduler.start()
+
 @app.route('/paciente/<int:paciente_id>/historiaclinica')
 def historia(paciente_id):
     cur = mysql.connection.cursor()
@@ -19,6 +32,7 @@ def historia(paciente_id):
     and clinica.paciente.id = %s """, (paciente_id,))
     rv = cur.fetchall()
     return str(rv)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
