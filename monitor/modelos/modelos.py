@@ -14,7 +14,7 @@ class Estados(enum.Enum):
 class EstadoServicio(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     fecha_registro = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-    servicio_id = db.Column(db.Integer)
+    servicio_id = db.Column(db.String(128))
     estado = db.Column(db.Enum(Estados))
     descripcion = db.Column(db.String(128))
 
