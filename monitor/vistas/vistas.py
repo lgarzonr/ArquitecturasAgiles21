@@ -1,7 +1,8 @@
-from flask import request
+from flask import (request,)
 from monitor.modelos.modelos import EstadoServicio, EstadoServicioSchema
 from flask_restful import Resource
 from ..modelos import (db, EstadoServicio, EstadoServicioSchema)
+from sqlalchemy import desc
 
 estadoServicioSchema = EstadoServicioSchema()
 
@@ -17,4 +18,4 @@ class VistaHeartBeat(Resource):
         return estadoServicioSchema.dump(nuevo_registro)
 
     def get(self):
-        return [estadoServicioSchema.dump(es) for es in EstadoServicio.query.all()]
+        return [estadoServicioSchema.dump(es) for es in EstadoServicio.query.order_by(desc(EstadoServicio.id)).all()]
