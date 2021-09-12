@@ -1,7 +1,7 @@
 from ..modelos import (db, EstadoServicio)
 from datetime import datetime, timedelta
 
-servicios_id_monitoreados=['historiasClinica','serviciosClinica']
+servicios_id_monitoreados=['historiasClinica',]
 delta_tiempo_segundos=30
 
 def check_statuses_reported(app_context):
