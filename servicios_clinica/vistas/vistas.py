@@ -5,7 +5,13 @@ from sqlalchemy.exc import IntegrityError
 from kafka import KafkaProducer
 import json
 
-producer = KafkaProducer(bootstrap_servers='localhost:9092', value_serializer=lambda v: json.dumps(v).encode('utf-8'))
+producer = KafkaProducer(
+    bootstrap_servers='example.com',
+    security_protocol = 'SASL_SSL',
+    sasl_mechanism = 'PLAIN',
+    sasl_plain_username = 'user',
+    sasl_plain_password = 'pass',
+    value_serializer=lambda v: json.dumps(v).encode('utf-8'))
 
 servicio_schema = ServicioSchema()
 
@@ -22,7 +28,8 @@ class VistaPacienteServicio(Resource):
 
         dump_schema = servicio_schema.dump(nuevo_servicio)
 
-        producer.send('actualizador-hc', dump_schema)
+        producer.send('ac-historiasclinicas', dump_schema)
+        producer.flush()
         return dump_schema
 
 

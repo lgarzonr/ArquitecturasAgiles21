@@ -8,7 +8,7 @@ def insert_varibles_into_table(id, fecha_registro, descripcion, tipo, paciente_i
         connection = mysql.connector.connect(host='localhost',
                                              database='clinica',
                                              user='root',
-                                             password='admin')
+                                             password='abcd1234')
         cursor = connection.cursor()
         mySql_insert_query = """INSERT INTO detalle (fecha_registro, descripcion, tipo, paciente_id) 
                                 VALUES (%s, %s, %s, %s) """
@@ -27,9 +27,12 @@ def insert_varibles_into_table(id, fecha_registro, descripcion, tipo, paciente_i
             connection.close()
             print("MySQL connection is closed")
 
-consumer = KafkaConsumer('actualizador-hc',
-                         bootstrap_servers=['localhost:9092'],
-                         #auto_offset_reset='earliest',
+consumer = KafkaConsumer('ac-historiasclinicas',
+                         bootstrap_servers= 'example.com',
+                         security_protocol = 'SASL_SSL',
+                         sasl_mechanism = 'PLAIN',
+                         sasl_plain_username = 'user',
+                         sasl_plain_password = 'pass',
                          value_deserializer=lambda x: loads(x.decode('utf-8'))
                          )
 
