@@ -24,6 +24,7 @@ class Servicio(db.Model):
     fecha_registro = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     descripcion = db.Column(db.String(128))
     paciente_id = db.Column(db.Integer)
+    precio = db.Column(db.Integer)
 
 class ServicioSchema(SQLAlchemyAutoSchema):
     tipo = EnumADiccionario(attribute=("tipo"))

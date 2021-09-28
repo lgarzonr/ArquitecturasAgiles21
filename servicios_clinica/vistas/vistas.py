@@ -20,7 +20,8 @@ class VistaPacienteServicio(Resource):
         nuevo_servicio = Servicio(
                 tipo=request.json["tipo"],
                 descripcion=request.json["descripcion"],
-                paciente_id=id_paciente
+                paciente_id=id_paciente,
+                precio=request.json["descripcion"]
                 )
 
         db.session.add(nuevo_servicio)
@@ -29,7 +30,7 @@ class VistaPacienteServicio(Resource):
         dump_schema = servicio_schema.dump(nuevo_servicio)
 
         producer.send('ac-historiasclinicas', dump_schema)
+        producer.send('ac-cuentas', dump_schema)
         producer.flush()
+        
         return dump_schema
-
-
