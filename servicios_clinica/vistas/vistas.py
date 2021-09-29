@@ -6,11 +6,11 @@ from kafka import KafkaProducer
 import json
 
 producer = KafkaProducer(
-    bootstrap_servers='example.com',
+    bootstrap_servers='bootstrap_servers',
     security_protocol = 'SASL_SSL',
     sasl_mechanism = 'PLAIN',
-    sasl_plain_username = 'user',
-    sasl_plain_password = 'pass',
+    sasl_plain_username = 'sasl_plain_username',
+    sasl_plain_password = 'sasl_plain_password',
     value_serializer=lambda v: json.dumps(v).encode('utf-8'))
 
 servicio_schema = ServicioSchema()
@@ -21,7 +21,7 @@ class VistaPacienteServicio(Resource):
                 tipo=request.json["tipo"],
                 descripcion=request.json["descripcion"],
                 paciente_id=id_paciente,
-                precio=request.json["descripcion"]
+                precio=request.json["precio"]
                 )
 
         db.session.add(nuevo_servicio)
