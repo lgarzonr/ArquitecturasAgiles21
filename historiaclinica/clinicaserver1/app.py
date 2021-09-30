@@ -18,11 +18,6 @@ def send_status():
     r = requests.post(monitor_uri, json = pload)
     print(r.text)
 
-scheduler = APScheduler()
-scheduler.add_job(id = 'intervalCheck', func = send_status, trigger = 'interval', seconds = 25)
-scheduler.init_app(app)
-scheduler.start()
-
 @app.route('/paciente/<int:paciente_id>/historiaclinica')
 def historia(paciente_id):
     cur = mysql.connection.cursor()
