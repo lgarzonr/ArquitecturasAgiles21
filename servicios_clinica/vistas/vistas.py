@@ -29,8 +29,14 @@ class VistaPacienteServicio(Resource):
 
         dump_schema = servicio_schema.dump(nuevo_servicio)
 
-        producer.send('ac-historiasclinicas', dump_schema)
-        producer.send('ac-cuentas', dump_schema)
+        historicas_clinicas_schema = dict(dump_schema)
+        historicas_clinicas_schema["precio"] = "*****"
+
+        cuentas_schema = dict(dump_schema)
+        cuentas_schema["descripcion"] = "***********" 
+
+        producer.send('ac-historiasclinicas', historicas_clinicas_schema)
+        producer.send('ac-cuentas', cuentas_schema)
         producer.flush()
         
         return dump_schema
