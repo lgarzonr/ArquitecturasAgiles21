@@ -7,7 +7,7 @@ import sqlite3
 
 def registrar_cuenta(pDescripcion, pTipo, pPaciente_id, pPrecio):
     try:
-        conexion=sqlite3.connect("..\cuentas_db.db")        
+        conexion=sqlite3.connect("../cuentas_db.db")        
         conexion.execute("INSERT INTO cuenta (precio, descripcion, tipo, paciente_id, fecha_registro) VALUES (?,?,?,?,?)", (pPrecio, pDescripcion, pTipo, pPaciente_id, datetime.datetime.now()))
         conexion.commit()    
         print("Record inserted successfully ")
